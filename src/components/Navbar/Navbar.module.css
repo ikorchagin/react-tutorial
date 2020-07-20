@@ -1,0 +1,16 @@
+.nav {
+  grid-area: n;
+}
+
+.item {
+  cursor: pointer;
+  padding: 8px;
+}
+.item:hover {
+  background: #c1e3cb;
+}
+
+.item a {
+  color: #1b3824;
+  text-decoration: none;
+}

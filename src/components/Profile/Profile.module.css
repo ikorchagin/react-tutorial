@@ -1,0 +1,18 @@
+.profile {
+  grid-area: c;
+}
+
+.profile_hat {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px 10px 0 0;
+}
+
+.content {
+  padding: 10px;
+}
+
+.item {
+}
