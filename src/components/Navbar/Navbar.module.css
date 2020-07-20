@@ -2,15 +2,21 @@
   grid-area: n;
 }
 
+a {
+  text-decoration: none;
+  color: #1b3824;
+  text-decoration: none;
+}
+
+.active {
+  color: gold;
+}
+
 .item {
   cursor: pointer;
   padding: 8px;
+  border-radius: 5px;
 }
 .item:hover {
   background: #c1e3cb;
-}
-
-.item a {
-  color: #1b3824;
-  text-decoration: none;
 }
