@@ -2,6 +2,8 @@
   grid-area: h;
   background-color: #29994b;
   margin-bottom: 20px;
+  position: fixed;
+  width: 100%;
 }
 
 .header img {
