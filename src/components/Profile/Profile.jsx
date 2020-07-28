@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Profile.module.css";
-import MyPosts from "./MyPosts/MyPosts";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 const Profile = (props) => {
@@ -10,16 +10,12 @@ const Profile = (props) => {
         <img
           className={`${style.profile_hat} shadow`}
           src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+          alt=""
         ></img>
       </div>
       <div className={style.content}>
         <ProfileInfo />
-        <MyPosts
-          posts={props.state.posts}
-          addPost={props.addPost}
-          newPostText={props.state.newPostText}
-          changeNewPostText={props.changeNewPostText}
-        />
+        <MyPostsContainer />
       </div>
     </div>
   );

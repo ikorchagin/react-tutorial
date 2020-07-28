@@ -4,7 +4,7 @@ import style from "./Post.module.css";
 const Post = (props) => {
   return (
     <div className={style.item}>
-      <img src="https://s3.amazonaws.com/liberty-uploads/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg"></img>
+      <img src="https://s3.amazonaws.com/liberty-uploads/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg" alt=""></img>
       {props.text}
       <div>
         <span>{props.likesCount} likes</span>

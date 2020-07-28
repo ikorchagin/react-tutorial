@@ -2,12 +2,13 @@ import React from "react";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Dialogs from "./components/Dialogs/Dialogs";
 import Profile from "./components/Profile/Profile";
-import { Route, Router, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 const App = (props) => {
   return (
@@ -19,21 +20,16 @@ const App = (props) => {
             <Navbar />
             <div className="app-wrapper-content shadow">
               <Route
-                path="/dialogs"
-                render={() => (
-                  <Dialogs state={props.state.dialogsPage} />
-                )}
+                exact
+                path="/"
+                component={() => {
+                  window.history.pushState(null, null, "/profile");
+                  return <Profile />;
+                }}
               />
-              <Route
-                path="/profile"
-                render={() => (
-                  <Profile
-                    state={props.state.profilePage}
-                    addPost={props.dispatch}
-                    changeNewPostText={props.dispatch}
-                  />
-                )}
-              />
+              <Route path="/dialogs" render={() => <DialogsContainer />} />
+              <Route path="/profile" render={() => <Profile />} />
+              <Route path="/users" render={() => <UsersContainer />} />
               <Route path="/settings" component={Settings} />
               <Route path="/music" component={Music} />
               <Route path="/news" component={News} />

@@ -1,6 +1,6 @@
-// Константы, чтобы не ошибиться
-const ADD_POST = "ADD-POST";
-const CHANGE_NEW_POST_TEXT = "CHANGE-NEW-POST-TEXT";
+import dialogsReducer from "./dialogs-reducer";
+import profileReducer from "./profile-reducer";
+import sitebarReducer from "./sitebar-reducer";
 
 const store = {
   _state: {
@@ -31,7 +31,10 @@ const store = {
         { text: "Как твой React?" },
         { text: "Говна пожуй" },
       ],
+      newMessageText: "",
     },
+
+    sitebar: {},
   },
 
   _renderPage() {
@@ -39,22 +42,10 @@ const store = {
   },
 
   dispatch(action) {
-    switch (action.type) {
-      case "ADD-POST":
-        this._state.profilePage.posts.push({
-          id: 5,
-          text: this._state.profilePage.newPostText,
-          likesCount: 0,
-        });
-        this._state.profilePage.newPostText = "";
-        this._renderPage(this._state);
-        break;
-
-      case "CHANGE-NEW-POST-TEXT":
-        this._state.profilePage.newPostText = action.text;
-        this._renderPage(this._state);
-        break;
-    }
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.sitebar = sitebarReducer(this._state.sitebar, action);
+    this._renderPage();
   },
 
   getState() {
@@ -67,13 +58,5 @@ const store = {
   },
 };
 
-// Экшн криейтеры
-export const actionCreateAddPost = () => {
-  return { type: ADD_POST };
-};
-
-export const actionCreateChangeNewPostText = (newText) => {
-  return { type: CHANGE_NEW_POST_TEXT, text: newText };
-};
-
+window.state = store._state;
 export default store;

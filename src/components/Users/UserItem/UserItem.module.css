@@ -1,0 +1,27 @@
+.userItem {
+  padding: 10px 0 10px 0;
+  display: grid;
+  grid-template-areas: "a i";
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: 140px;
+}
+
+.avatar {
+  grid-area: a;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.avatar img {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+.info { 
+  grid-area: i;
+}
