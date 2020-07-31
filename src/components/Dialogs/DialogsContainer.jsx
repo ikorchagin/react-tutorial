@@ -1,9 +1,7 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import Dialogs from "./Dialogs";
-import {
-  actionCreateChangeMessageText,
-  actionCreateAddMessage,
-} from "../../redux/dialogs-reducer";
+import { changeMessageText, addMessage } from "../../redux/dialogs-reducer";
 import { connect } from "react-redux";
 
 let mapStateToProps = (state) => ({
@@ -12,11 +10,9 @@ let mapStateToProps = (state) => ({
   dialogs: state.dialogsPage.dialogs,
 });
 
-let mapDispatchToState = (dispatch) => ({
-  addMessage: () => dispatch(actionCreateAddMessage()),
-  changeNewMessageText: (text) => dispatch(actionCreateChangeMessageText(text)),
-});
-
-const DialogsContainer = connect(mapStateToProps, mapDispatchToState)(Dialogs);
+const DialogsContainer = connect(mapStateToProps, {
+  changeMessageText,
+  addMessage,
+})(Dialogs);
 
 export default DialogsContainer;

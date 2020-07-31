@@ -1,5 +1,8 @@
+import { profileAPI } from "../api/api";
+
 const ADD_POST = "ADD-POST";
 const CHANGE_NEW_POST_TEXT = "CHANGE-NEW-POST-TEXT";
+const SET_PROFILE = "SET-PROFILE";
 
 const initialState = {
   posts: [
@@ -12,6 +15,7 @@ const initialState = {
     { text: "Добавил новый элемент", likesCount: 54 },
   ],
   newPostText: "",
+  currentProfile: null,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -30,6 +34,9 @@ const profileReducer = (state = initialState, action) => {
         newPostText: "",
       };
 
+    case SET_PROFILE:
+      return { ...state, currentProfile: action.profile };
+
     case CHANGE_NEW_POST_TEXT:
       state.newPostText = action.text;
       return { ...state, newPostText: action.text };
@@ -38,11 +45,19 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const actionCreateAddPost = () => ({ type: ADD_POST });
+export const addPost = () => ({ type: ADD_POST });
 
-export const actionCreateChangeNewPostText = (newText) => ({
+export const setProfile = (profile) => ({ type: SET_PROFILE, profile });
+
+export const changeNewPostText = (newText) => ({
   type: CHANGE_NEW_POST_TEXT,
   text: newText,
 });
+
+export const getProfile = (userId) => (dispatch) => {
+  profileAPI.getProfile(userId).then((response) => {
+    dispatch(setProfile(response));
+  });
+};
 
 export default profileReducer;

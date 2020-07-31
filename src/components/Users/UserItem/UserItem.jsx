@@ -1,20 +1,32 @@
 import React from "react";
 import style from "./UserItem.module.css";
 import user_image from "../../../assets/images/user.webp";
+import { NavLink } from "react-router-dom";
 
 const UserItem = (props) => {
   return (
     <div className={style.userItem}>
       <div className={style.avatar}>
-        {props.user.photos.small ?? (
-          <img src={user_image} alt="" />
-        )}
+        <NavLink to={"profile/" + props.user.id}>
+          {props.user.photos.small ? (
+            <img src={props.user.photos.small} alt="" />
+          ) : (
+            <img src={user_image} alt="" />
+          )}
+        </NavLink>
+
         {props.user.followed ? (
-          <button onClick={() => props.changeFollow(props.user.id, false)}>
+          <button
+            disabled={props.isFolowing.includes(props.user.id)}
+            onClick={() => props.unFollow(props.user.id)}
+          >
             Unfollow
           </button>
         ) : (
-          <button onClick={() => props.changeFollow(props.user.id, true)}>
+          <button
+            disabled={props.isFolowing.includes(props.user.id)}
+            onClick={() => props.follow(props.user.id)}
+          >
             Follow
           </button>
         )}

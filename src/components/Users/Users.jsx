@@ -1,27 +1,43 @@
 import React from "react";
 import UserItem from "./UserItem/UserItem";
+import PreLoader from "../PreLoader/PreLoader";
+import style from "./Users.module.css";
 import Axios from "axios";
+import { usersAPI } from "../../api/api";
 
 const Users = (props) => {
-  if (props.users.length === 0) {
-    let url = "https://social-network.samuraijs.com/api/1.0";
-
-    let users = Axios.get(`${url}/users`, {
-      headers: {
-        "API-KEY": "d0ce4cd8-d0d2-4152-99ad-f6e1407cb23f",
-      },
-    }).then((x) => {
-      debugger;
-      props.setUsers(x.data.items);
-      console.log(x.data.items);
-    });
+  let totalPages = Math.ceil(props.totalCount / props.pageSize);
+  let pages = [];
+  for (let i = props.currentPage; i < props.currentPage + 10; i++) {
+    pages.push(i);
   }
-
   return (
-    <div>
-      {props.users.map((x) => (
-        <UserItem user={x} changeFollow={props.changeFollow} />
-      ))}
+    <div className={style.users}>
+      <div>
+        {props.isFetching ? (
+          <PreLoader />
+        ) : (
+          props.users.map((x) => (
+            <UserItem
+              user={x}
+              follow={props.follow}
+              unFollow={props.unFollow}
+              isFolowing={props.isFolowing}
+            />
+          ))
+        )}
+      </div>
+      <div className={style.page_numbers}>
+        {pages.map((x) => (
+          <span
+            onClick={() => {
+              props.getUsers(x, props.pageSize);
+            }}
+          >
+            {x}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };

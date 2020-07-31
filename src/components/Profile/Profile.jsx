@@ -2,8 +2,12 @@ import React from "react";
 import style from "./Profile.module.css";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import PreLoader from "../PreLoader/PreLoader";
 
-const Profile = (props) => {
+const Profile = (props) => {  
+  if (!props.currentProfile) {
+    return <PreLoader />;
+  }
   return (
     <div className={style.profile}>
       <div>
@@ -14,7 +18,11 @@ const Profile = (props) => {
         ></img>
       </div>
       <div className={style.content}>
-        <ProfileInfo />
+        <ProfileInfo
+          avatar={props.currentProfile.photos.large}
+          description={props.currentProfile.aboutMe}
+          name={props.currentProfile.fullName}
+        />
         <MyPostsContainer />
       </div>
     </div>

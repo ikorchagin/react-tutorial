@@ -3,10 +3,10 @@ const CHANGE_NEW_MESSAGE_TEXT = "CHANGE-NEW-MESSAGE-TEXT";
 
 const initialState = {
   dialogs: [
-    { name: "Игорь", id: 1 },
-    { name: "Павел", id: 2 },
-    { name: "Дмитрий", id: 3 },
-    { name: "Константин", id: 4 },
+    { name: "Игорь", id: 1, isActive: true },
+    { name: "Павел", id: 2, isActive: false },
+    { name: "Дмитрий", id: 3, isActive: false },
+    { name: "Константин", id: 4, isActive: false },
   ],
 
   messages: [
@@ -41,11 +41,11 @@ const dialogsReducer = (state = initialState, action) => {
 
 export default dialogsReducer;
 
-export const actionCreateChangeMessageText = (text) => ({
+export const changeMessageText = (text) => ({
   type: CHANGE_NEW_MESSAGE_TEXT,
   messageText: text,
 });
 
-export const actionCreateAddMessage = () => ({
+export const addMessage = () => ({
   type: ADD_MESSAGE,
 });

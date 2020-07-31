@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import Header from "./components/Header/Header";
+import Header from "./components/Header/HeaderContainer";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
-import { Route, BrowserRouter } from "react-router-dom";
+import Profile from "./components/Profile/ProfileContainer";
+import { Route, BrowserRouter, NavLink } from "react-router-dom";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
@@ -23,12 +23,18 @@ const App = (props) => {
                 exact
                 path="/"
                 component={() => {
-                  window.history.pushState(null, null, "/profile");
+                  window.history.replaceState(null, null, "/profile");
                   return <Profile />;
                 }}
               />
-              <Route path="/dialogs" render={() => <DialogsContainer />} />
-              <Route path="/profile" render={() => <Profile />} />
+              <Route
+                path="/dialogs"
+                component={() => {
+                  document.title = "Dialogs";
+                  return <DialogsContainer />;
+                }}
+              />
+              <Route path="/profile/:userId" component={Profile} />
               <Route path="/users" render={() => <UsersContainer />} />
               <Route path="/settings" component={Settings} />
               <Route path="/music" component={Music} />

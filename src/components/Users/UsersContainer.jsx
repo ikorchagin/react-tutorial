@@ -1,43 +1,29 @@
 import React from "react";
 import Users from "./Users";
 import { connect } from "react-redux";
-import {
-  actionCreateChangeFollow,
-  actionCreateSetUsers,
-} from "../../redux/users-reducer";
+import { getUsers, unFollow, follow } from "../../redux/users-reducer";
 
-// const UsersContainer = () => {
-//   return (
-//     <Users
-//       users={[
-//         {
-//           name: "Dmitry",
-//           description: "Ya daun",
-//           city: "SPB",
-//           country: "Russia",
-//           follow: true,
-//         },
-//         {
-//           name: "Dmitry",
-//           description: "Ya daun",
-//           city: "SPB",
-//           country: "Russia",
-//           follow: false,
-//         },
-//       ]}
-//     />
-//   );
-// };
+class UsersContainer extends React.Component {
+  componentDidMount() {
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
+  }
+
+  render() {
+    return <Users {...this.props} />;
+  }
+}
 
 let mapStateToProps = (state) => ({
   users: state.usersPage.users,
+  totalCount: state.usersPage.totalCount,
+  pageSize: state.usersPage.pageSize,
+  currentPage: state.usersPage.currentPage,
+  isFetching: state.usersPage.isFetching,
+  isFolowing: state.usersPage.isFolowing,
 });
 
-let mapDispatchToProps = (dispatch) => ({
-  changeFollow: (id, value) => dispatch(actionCreateChangeFollow(id, value)),
-  setUsers: (users) => dispatch(actionCreateSetUsers(users)),
-});
-
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
-
-export default UsersContainer;
+export default connect(mapStateToProps, {
+  getUsers,
+  unFollow,
+  follow,
+})(UsersContainer);

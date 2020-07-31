@@ -9,7 +9,7 @@ const Profile = (props) => {
     <div className={style.dialogs_page}>
       <nav className={style.dialogs}>
         {props.dialogs.map((x) => (
-          <DialogItem name={x.name} id={x.id} />
+          <DialogItem name={x.name} id={x.id} isActive={x.isActive} />
         ))}
       </nav>
       <div className={style.messages}>
@@ -22,7 +22,7 @@ const Profile = (props) => {
             placeholder="Write anything"
             value={props.newMessageText}
             onChange={() =>
-              props.changeNewMessageText(currentMessageRef.current.value)
+              props.changeMessageText(currentMessageRef.current?.value)
             }
           ></textarea>
           <button onClick={() => props.addMessage()}>Send</button>

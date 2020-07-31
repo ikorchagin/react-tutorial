@@ -15,3 +15,19 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.header .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  cursor: pointer;
+  color: white;
+}
+
+.link:hover {
+  color: bisque;
+}
