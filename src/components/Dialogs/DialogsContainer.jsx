@@ -3,16 +3,26 @@ import React from "react";
 import Dialogs from "./Dialogs";
 import { changeMessageText, addMessage } from "../../redux/dialogs-reducer";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import withCheckAuth from "../../hoc/withCheckAuth";
+import {
+  selectNewMessageText,
+  selectMessages,
+  selectDialogs,
+} from "../../redux/dialogs-selectors";
+import { selectIsAuth } from "../../redux/auth-selectors";
 
 let mapStateToProps = (state) => ({
-  newMessageText: state.dialogsPage.newMessageText,
-  messages: state.dialogsPage.messages,
-  dialogs: state.dialogsPage.dialogs,
+  newMessageText: selectNewMessageText(state),
+  messages: selectMessages(state),
+  dialogs: selectDialogs(state),
+  isAuth: selectIsAuth(state),
 });
 
-const DialogsContainer = connect(mapStateToProps, {
-  changeMessageText,
-  addMessage,
-})(Dialogs);
-
-export default DialogsContainer;
+export default compose(
+  withCheckAuth,
+  connect(mapStateToProps, {
+    changeMessageText,
+    addMessage,
+  })
+)(Dialogs);

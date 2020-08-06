@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./Profile.module.css";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import PreLoader from "../PreLoader/PreLoader";
 
-const Profile = (props) => {  
-  if (!props.currentProfile) {
+const Profile = ({ currentProfile, currentStatus, getStatus, setStatus }) => {
+  if (!currentProfile) {
     return <PreLoader />;
   }
+
   return (
     <div className={style.profile}>
       <div>
@@ -19,9 +20,11 @@ const Profile = (props) => {
       </div>
       <div className={style.content}>
         <ProfileInfo
-          avatar={props.currentProfile.photos.large}
-          description={props.currentProfile.aboutMe}
-          name={props.currentProfile.fullName}
+          avatar={currentProfile.photos.large}
+          description={currentStatus}
+          name={currentProfile.fullName}
+          getStatus={getStatus}
+          setStatus={setStatus}
         />
         <MyPostsContainer />
       </div>

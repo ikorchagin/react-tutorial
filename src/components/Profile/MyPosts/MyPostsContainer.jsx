@@ -2,11 +2,15 @@ import React from "react";
 import MyPosts from "./MyPosts";
 import { addPost, changeNewPostText } from "../../../redux/profile-reducer";
 import { connect } from "react-redux";
+import {
+  selectPosts,
+  selectNewPostText,
+} from "../../../redux/profile-selectors";
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.profilePage.posts,
-    newPostText: state.profilePage.newPostText,
+    posts: selectPosts(state),
+    newPostText: selectNewPostText(state),
   };
 };
 

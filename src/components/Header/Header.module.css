@@ -31,3 +31,10 @@
 .link:hover {
   color: bisque;
 }
+
+.links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 140px;
+}

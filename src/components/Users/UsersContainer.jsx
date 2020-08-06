@@ -1,29 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Users from "./Users";
 import { connect } from "react-redux";
 import { getUsers, unFollow, follow } from "../../redux/users-reducer";
+import { compose } from "redux";
+import {
+  selectUsers,
+  selectTotalCount,
+  selectCurrentPage,
+  selectIsFetching,
+  selectIsFolowing,
+  selectPageSize,
+} from "../../redux/users-selector";
+import { selectIsAuth } from "../../redux/auth-selectors";
 
-class UsersContainer extends React.Component {
-  componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.pageSize);
-  }
+const UsersContainer = (props) => {
+  useEffect(() => {
+    debugger;
+    props.getUsers(props.currentPage, props.pageSize);
+  }, []);
 
-  render() {
-    return <Users {...this.props} />;
-  }
-}
+  return <Users {...props} />;
+};
 
-let mapStateToProps = (state) => ({
-  users: state.usersPage.users,
-  totalCount: state.usersPage.totalCount,
-  pageSize: state.usersPage.pageSize,
-  currentPage: state.usersPage.currentPage,
-  isFetching: state.usersPage.isFetching,
-  isFolowing: state.usersPage.isFolowing,
-});
-
-export default connect(mapStateToProps, {
-  getUsers,
-  unFollow,
-  follow,
-})(UsersContainer);
+export default compose(
+  connect(
+    (state) => ({
+      users: selectUsers(state),
+      totalCount: selectTotalCount(state),
+      pageSize: selectPageSize(state),
+      currentPage: selectCurrentPage(state),
+      isFetching: selectIsFetching(state),
+      isFolowing: selectIsFolowing(state),
+      isAuth: selectIsAuth(state),
+    }),
+    {
+      getUsers,
+      unFollow,
+      follow,
+    }
+  )
+)(UsersContainer);

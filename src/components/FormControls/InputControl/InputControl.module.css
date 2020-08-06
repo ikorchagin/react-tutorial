@@ -1,0 +1,13 @@
+.textControl {
+  display: flex;
+  flex-direction: column;
+}
+
+.textControl.error span {
+  color: red;
+}
+
+.textControl.error textarea,
+.textControl.error input {
+  border: 1px red solid;
+}

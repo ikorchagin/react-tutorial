@@ -1,8 +1,10 @@
 import { profileAPI } from "../api/api";
+import { reset } from "redux-form";
 
 const ADD_POST = "ADD-POST";
 const CHANGE_NEW_POST_TEXT = "CHANGE-NEW-POST-TEXT";
 const SET_PROFILE = "SET-PROFILE";
+const SET_STATUS = "SET-STATUS";
 
 const initialState = {
   posts: [
@@ -16,6 +18,7 @@ const initialState = {
   ],
   newPostText: "",
   currentProfile: null,
+  currentStatus: null,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -27,25 +30,31 @@ const profileReducer = (state = initialState, action) => {
           ...state.posts,
           {
             id: 5,
-            text: state.newPostText,
+            text: action.text,
             likesCount: 0,
           },
         ],
-        newPostText: "",
       };
 
     case SET_PROFILE:
       return { ...state, currentProfile: action.profile };
 
     case CHANGE_NEW_POST_TEXT:
-      state.newPostText = action.text;
       return { ...state, newPostText: action.text };
+
+    case SET_STATUS:
+      return { ...state, currentStatus: action.status };
     default:
       return state;
   }
 };
 
-export const addPost = () => ({ type: ADD_POST });
+const addPostAC = ({ text }) => ({ type: ADD_POST, text });
+
+export const addPost = (data) => (dispatch) => {
+  dispatch(addPostAC(data));
+  dispatch(reset("addPost"));
+};
 
 export const setProfile = (profile) => ({ type: SET_PROFILE, profile });
 
@@ -54,9 +63,35 @@ export const changeNewPostText = (newText) => ({
   text: newText,
 });
 
-export const getProfile = (userId) => (dispatch) => {
-  profileAPI.getProfile(userId).then((response) => {
+const getProfile = (userId) => (dispatch) => {
+  return profileAPI.getProfile(userId).then((response) => {
     dispatch(setProfile(response));
+  });
+};
+
+const getStatus = (userId) => (dispatch) => {
+  return profileAPI.getStatus(userId).then((response) => {
+    dispatch(setStatusAC(response));
+  });
+};
+
+export const getInfo = (userId) => (dispatch) => {
+  dispatch(setProfile(null));
+  getStatus(userId)(dispatch).then(() => {
+    getProfile(userId)(dispatch);
+  });
+};
+
+const setStatusAC = (status) => ({
+  type: SET_STATUS,
+  status,
+});
+
+export const setStatus = (status) => (dispatch) => {
+  profileAPI.setStatus(status).then((response) => {
+    if (response.resultCode == 0) {
+      dispatch(setStatusAC(status));
+    }
   });
 };
 

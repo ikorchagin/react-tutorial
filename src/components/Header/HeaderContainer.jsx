@@ -1,18 +1,22 @@
 import React, { Component } from "react";
 import Header from "./Header";
-import { authMe } from "../../redux/auth-reducer";
+import { authMe, logout } from "../../redux/auth-reducer";
 import { connect } from "react-redux";
+import {
+  selectLogin,
+  selectEmail,
+  selectUserId,
+  selectIsAuth,
+} from "../../redux/auth-selectors";
 
-class HeaderContainer extends Component {
-  render() {
-    return <Header {...this.props} authMe={this.props.authMe} />;
-  }
-}
+const HeaderContainer = (props) => {
+  return <Header {...props} authMe={props.authMe} />;
+};
 
 let mapStateToProps = (state) => ({
-  login: state.auth.login,
-  email: state.auth.email,
-  userId: state.auth.userId,
-  isAuth: state.auth.isAuth,
+  login: selectLogin(state),
+  email: selectEmail(state),
+  userId: selectUserId(state),
+  isAuth: selectIsAuth(state),
 });
-export default connect(mapStateToProps, { authMe })(HeaderContainer);
+export default connect(mapStateToProps, { logout, authMe })(HeaderContainer);

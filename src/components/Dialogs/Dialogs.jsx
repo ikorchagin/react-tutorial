@@ -2,6 +2,7 @@ import React from "react";
 import style from "./Dialogs.module.css";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import SendMessageFormContainer from "./SendMessageForm/SendMessageFormContainer";
 
 const Profile = (props) => {
   let currentMessageRef = React.createRef();
@@ -12,21 +13,12 @@ const Profile = (props) => {
           <DialogItem name={x.name} id={x.id} isActive={x.isActive} />
         ))}
       </nav>
+
       <div className={style.messages}>
         {props.messages.map((x) => (
           <Message text={x.text} />
         ))}
-        <div>
-          <textarea
-            ref={currentMessageRef}
-            placeholder="Write anything"
-            value={props.newMessageText}
-            onChange={() =>
-              props.changeMessageText(currentMessageRef.current?.value)
-            }
-          ></textarea>
-          <button onClick={() => props.addMessage()}>Send</button>
-        </div>
+        <SendMessageFormContainer addMessage={props.addMessage} />
       </div>
     </div>
   );

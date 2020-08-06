@@ -1,3 +1,5 @@
+import { reset } from "redux-form";
+
 const ADD_MESSAGE = "ADD-MESSAGE";
 const CHANGE_NEW_MESSAGE_TEXT = "CHANGE-NEW-MESSAGE-TEXT";
 
@@ -26,7 +28,7 @@ const dialogsReducer = (state = initialState, action) => {
         messages: [
           ...state.messages,
           {
-            text: state.newMessageText,
+            text: action.text,
           },
         ],
         newMessageText: "",
@@ -46,6 +48,12 @@ export const changeMessageText = (text) => ({
   messageText: text,
 });
 
-export const addMessage = () => ({
+const addMessageAC = ({ text }) => ({
   type: ADD_MESSAGE,
+  text,
 });
+
+export const addMessage = (data) => (dispatch) => {
+  dispatch(addMessageAC(data));
+  dispatch(reset("addMessage"));
+};

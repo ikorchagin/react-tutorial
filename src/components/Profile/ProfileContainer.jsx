@@ -1,28 +1,41 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { setProfile, getProfile } from "../../redux/profile-reducer";
-import { withRouter } from "react-router-dom";
-import { profileAPI } from "../../api/api";
+import { setProfile, getInfo, setStatus } from "../../redux/profile-reducer";
+import { withRouter, Redirect } from "react-router-dom";
+import { compose } from "redux";
+import withCheckAuth from "../../hoc/withCheckAuth";
+import { selectIsAuth, selectUserId } from "../../redux/auth-selectors";
+import {
+  selectCurrentProfile,
+  selectCurrentStatus,
+} from "../../redux/profile-selectors";
 
-class ProfileContainer extends Component {
-  componentDidMount() {
-    this.props.getProfile(this.props.match.params.userId);
+const ProfileContainer = (props) => {
+  useEffect(() => {
+    let userId = props.match.params.userId;
+    if (!userId) {
+      userId = props.userId;
+    }
+    props.getInfo(userId);
+  }, [props.match.params.userId]);
+
+  if (props.match.params.userId === undefined && !props.isAuth) {
+    return <Redirect to="/login" />;
   }
 
-  componentWillUnmount() {
-    this.props.setProfile(null);
-  }
+  return <Profile {...props} />;
+};
 
-  render() {
-    return <Profile currentProfile={this.props.currentProfile} />;
-  }
-}
-
-let mapStateToProps = (state) => ({
-  currentProfile: state.profilePage.currentProfile,
-});
-
-export default connect(mapStateToProps, { getProfile, setProfile })(
-  withRouter(ProfileContainer)
-);
+export default compose(
+  withRouter,
+  connect(
+    (state) => ({
+      currentProfile: selectCurrentProfile(state),
+      isAuth: selectIsAuth(state),
+      userId: selectUserId(state),
+      currentStatus: selectCurrentStatus(state),
+    }),
+    { setProfile, getInfo, setStatus }
+  )
+)(ProfileContainer);

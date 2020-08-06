@@ -1,24 +1,15 @@
 import React from "react";
 import style from "./MyPosts.module.css";
 import Post from "./Post/Post";
+import AddPostform from "./AddPostForm/AddPostFormContainer";
 
 const MyPosts = (props) => {
-  let textareaRef = React.createRef();
+  const { addPost, posts } = props;
   return (
     <div>
       <h3>My posts</h3>
-      <div>
-        <textarea
-          ref={textareaRef}
-          placeholder="Anything new?"
-          value={props.newPostText}
-          onChange={() => props.changeNewPostText(textareaRef.current.value)}
-        />
-        <div>
-          <button onClick={props.addPost}>Add new post</button>
-        </div>
-      </div>
-      {props.posts.map((x) => (
+      <AddPostform addPost={addPost} />
+      {posts.map((x) => (
         <Post text={x.text} likesCount={x.likesCount} />
       ))}
     </div>
