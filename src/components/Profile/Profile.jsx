@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import style from "./Profile.module.css";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import PreLoader from "../PreLoader/PreLoader";
+import PreLoader from "../common/PreLoader/PreLoader";
 
 const Profile = ({ currentProfile, currentStatus, getStatus, setStatus }) => {
   if (!currentProfile) {

@@ -15,7 +15,6 @@ import { selectIsAuth } from "../../redux/auth-selectors";
 
 const UsersContainer = (props) => {
   useEffect(() => {
-    debugger;
     props.getUsers(props.currentPage, props.pageSize);
   }, []);
 

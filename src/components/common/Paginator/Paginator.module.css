@@ -1,0 +1,13 @@
+.paginator {
+  display: flex;
+  flex-direction: row;
+}
+
+.paginator__item {
+  margin: 0 5px 0 5px;
+  cursor: pointer;
+}
+
+.paginator__item:hover {
+  background-color: beige ;
+}

@@ -1,7 +1,8 @@
 import React from "react";
 import UserItem from "./UserItem/UserItem";
-import PreLoader from "../PreLoader/PreLoader";
+import PreLoader from "../common/PreLoader/PreLoader";
 import style from "./Users.module.css";
+import Paginator from "../common/Paginator/Paginator";
 
 const Users = ({
   follow,
@@ -15,34 +16,30 @@ const Users = ({
   totalCount,
 }) => {
   const totalPages = Math.ceil(totalCount / pageSize);
-  console.log(totalPages);
+  if (isFetching) {
+    return <PreLoader />;
+  }
   return (
     <div className={style.users}>
       <div>
-        {isFetching ? (
-          <PreLoader />
-        ) : (
-          users.map((x) => (
-            <UserItem
-              user={x}
-              follow={follow}
-              unFollow={unFollow}
-              isFolowing={isFolowing}
-            />
-          ))
-        )}
+        {users.map((x) => (
+          <UserItem
+            user={x}
+            follow={follow}
+            unFollow={unFollow}
+            isFolowing={isFolowing}
+          />
+        ))}
       </div>
-      <div className={style.page_numbers}>
-        {/* {pages.map((x) => (
-          <span
-            onClick={() => {
-              getUsers(x, pageSize);
-            }}
-          >
-            {x}
-          </span>
-        ))} */}
-      </div>
+
+      <Paginator
+        totalCount={totalCount}
+        portionSize={5}
+        onPageClick={(id) => {
+          getUsers(id, pageSize);
+        }}
+        pageSize={pageSize}
+      />
     </div>
   );
 };

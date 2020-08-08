@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { setProfile, getInfo, setStatus } from "../../redux/profile-reducer";
 import { withRouter, Redirect } from "react-router-dom";
 import { compose } from "redux";
-import withCheckAuth from "../../hoc/withCheckAuth";
 import { selectIsAuth, selectUserId } from "../../redux/auth-selectors";
 import {
   selectCurrentProfile,
@@ -18,6 +17,9 @@ const ProfileContainer = (props) => {
       userId = props.userId;
     }
     props.getInfo(userId);
+    return () => {
+      props.setProfile(null);
+    }
   }, [props.match.params.userId]);
 
   if (props.match.params.userId === undefined && !props.isAuth) {

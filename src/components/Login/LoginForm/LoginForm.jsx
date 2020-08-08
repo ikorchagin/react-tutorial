@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "redux-form";
 import LoginContainer from "../LoginContainer";
-import InputControl from "../../FormControls/InputControl/InputControl";
+import InputControl from "../../common/FormControls/InputControl/InputControl";
 import { required, maxLength50 } from "../../../utils/validators/validators";
 import style from "./LoginForm.module.css";
 

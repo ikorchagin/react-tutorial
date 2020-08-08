@@ -1,6 +1,6 @@
 import React from "react";
 import { Field } from "redux-form";
-import TextAreaControl from "../../../FormControls/TextAreaControl/TextAreaControl";
+import TextAreaControl from "../../../common/FormControls/TextAreaControl/TextAreaControl";
 
 export default (props) => {
   let { handleSubmit } = props;

@@ -76,7 +76,6 @@ const getStatus = (userId) => (dispatch) => {
 };
 
 export const getInfo = (userId) => (dispatch) => {
-  dispatch(setProfile(null));
   getStatus(userId)(dispatch).then(() => {
     getProfile(userId)(dispatch);
   });
