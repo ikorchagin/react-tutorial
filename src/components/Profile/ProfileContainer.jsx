@@ -1,13 +1,19 @@
 import React, { Component, useEffect } from "react";
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { setProfile, getInfo, setStatus } from "../../redux/profile-reducer";
+import {
+  setProfile,
+  getInfo,
+  setStatus,
+  updateProfileImage,
+} from "../../redux/profile-reducer";
 import { withRouter, Redirect } from "react-router-dom";
 import { compose } from "redux";
 import { selectIsAuth, selectUserId } from "../../redux/auth-selectors";
 import {
   selectCurrentProfile,
   selectCurrentStatus,
+  selectProfileImage,
 } from "../../redux/profile-selectors";
 
 const ProfileContainer = (props) => {
@@ -19,7 +25,7 @@ const ProfileContainer = (props) => {
     props.getInfo(userId);
     return () => {
       props.setProfile(null);
-    }
+    };
   }, [props.match.params.userId]);
 
   if (props.match.params.userId === undefined && !props.isAuth) {
@@ -38,6 +44,6 @@ export default compose(
       userId: selectUserId(state),
       currentStatus: selectCurrentStatus(state),
     }),
-    { setProfile, getInfo, setStatus }
+    { setProfile, getInfo, setStatus, setProfileImage: updateProfileImage }
   )
 )(ProfileContainer);

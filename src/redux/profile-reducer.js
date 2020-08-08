@@ -5,6 +5,8 @@ const ADD_POST = "ADD-POST";
 const CHANGE_NEW_POST_TEXT = "CHANGE-NEW-POST-TEXT";
 const SET_PROFILE = "SET-PROFILE";
 const SET_STATUS = "SET-STATUS";
+const SET_IMAGE_SUCCESS = "SET-IMAGE-SUCCESS";
+const UPDATE_PHOTOS = "UPDATE-PHOTOS";
 
 const initialState = {
   posts: [
@@ -41,6 +43,15 @@ const profileReducer = (state = initialState, action) => {
 
     case CHANGE_NEW_POST_TEXT:
       return { ...state, newPostText: action.text };
+
+    case SET_IMAGE_SUCCESS:
+      return { ...state, currentImage: action.image };
+
+    case UPDATE_PHOTOS:
+      return {
+        ...state,
+        currentProfile: { ...state.currentProfile, photos: action.photos },
+      };
 
     case SET_STATUS:
       return { ...state, currentStatus: action.status };
@@ -85,6 +96,20 @@ const setStatusAC = (status) => ({
   type: SET_STATUS,
   status,
 });
+
+const updatePhotos = (photos) => ({
+  type: UPDATE_PHOTOS,
+  photos,
+});
+
+export const updateProfileImage = (image) => (dispatch) => {
+  profileAPI.setPhoto(image).then((response) => {
+    if (response.resultCode === 0) {
+      console.log(response.data);
+      dispatch(updatePhotos(response.data.photos));
+    }
+  });
+};
 
 export const setStatus = (status) => (dispatch) => {
   profileAPI.setStatus(status).then((response) => {
